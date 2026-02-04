@@ -9,7 +9,7 @@ let expenses = [
 
 let budgets = {
     "Food": 1000,
-    "Transport": 800,
+    "Transport": 1000,
 };
 
 app.use((req, res, next) => {
