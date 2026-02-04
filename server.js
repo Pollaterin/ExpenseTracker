@@ -7,6 +7,11 @@ let expenses = [
   { id: 1, category: 'Food', description: 'Coffee', amount: 5, date: '2026-02-04' }
 ];
 
+let budgets = {
+    "Food": 1000,
+    "Transport": 500
+};
+
 app.use((req, res, next) => {
     console.log(`${req.method} request to ${req.url}`);
     next();
@@ -41,6 +46,15 @@ const filteredExpenses = expenses.filter(expense => {
     } else {
         return false; 
     }
+});
+
+app.post('/budget', (req, res) => {
+    const { category, amount } = req.body;
+    if (!category || !amount) {
+        return res.status(400).json({ message: "Category and amount are required" });
+    }
+    budgets[category] = amount; 
+    res.json({ message: `Budget for ${category} set to ${amount}`, budgets });
 });
 
 app.delete('/expenses/:id', (req, res) => {
