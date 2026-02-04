@@ -23,6 +23,14 @@ app.get('/expenses', (req, res) => {
     res.json(expenses);
 });
 
+app.get('/expenses', (req, res) => {
+    const category = req.query.category;
+    if (category) {
+        const filteredExpenses = expenses.filter(expense => expense.category === category);
+        return res.json(filteredExpenses);
+    }
+    res.json(expenses);
+});
 
 app.delete('/expenses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
