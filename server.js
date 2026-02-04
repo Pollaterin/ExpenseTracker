@@ -32,6 +32,17 @@ app.get('/expenses', (req, res) => {
     res.json(expenses);
 });
 
+const filteredExpenses = expenses.filter(expense => {
+    let d = new Date(expense.date);
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    if (d >= start && d <= end) {
+        return true;  
+    } else {
+        return false; 
+    }
+});
+
 app.delete('/expenses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     expenses = expenses.filter(expense => expense.id != id);
