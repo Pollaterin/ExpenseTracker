@@ -57,6 +57,29 @@ app.post('/budget', (req, res) => {
     res.json({ message: `Budget for ${category} set to ${amount}`, budgets });
 });
 
+app.get('/budget/status', (req, res) => {
+    let status = [];
+    for (let category in budgets) {
+        let totalSpent = 0;
+        expenses.forEach(exp => {
+            if (exp.category === category) {
+                totalSpent += exp.amount;
+            }
+        });
+        let limit = budgets[category];
+        let exceeded = totalSpent > limit;
+        status.push({
+            category: category,
+            spent: totalSpent,
+            limit: limit,
+            isExceeded: exceeded,
+            remaining: limit - totalSpent
+        });
+    }
+
+    res.json(status);
+});
+
 app.delete('/expenses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     expenses = expenses.filter(expense => expense.id != id);
