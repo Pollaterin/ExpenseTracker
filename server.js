@@ -24,7 +24,7 @@ app.post('/expenses', (req, res) => {
     res.status(201).json({ message: 'Expense added successfully', data: newExpense });
 });
 
-app.get('/expenses', (req, res) => {
+app.get('/expenses', (req, res) => { //видалити
     res.json(expenses);
 });
 
@@ -35,17 +35,6 @@ app.get('/expenses', (req, res) => {
         return res.json(filteredExpenses);
     }
     res.json(expenses);
-});
-
-const filteredExpenses = expenses.filter(expense => {
-    let d = new Date(expense.date);
-    let start = new Date(startDate);
-    let end = new Date(endDate);
-    if (d >= start && d <= end) {
-        return true;  
-    } else {
-        return false; 
-    }
 });
 
 app.post('/budget', (req, res) => {
